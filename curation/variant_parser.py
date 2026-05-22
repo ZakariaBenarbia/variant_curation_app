@@ -92,8 +92,8 @@ def calculate_improved_score(row):
 def main():
     vaf_input = snakemake.input.vaf_csv
     output_path = snakemake.output.features
-    census_path = "/home/zakaria/heme-variant-pipeline/resources/cosmic/CancerGeneCensus.tsv"
-    mutation_path = "/home/zakaria/heme-variant-pipeline/resources/cosmic/cosmic_mutation.tsv"
+    census_path = "resources/cosmic/CancerGeneCensus.tsv"
+    mutation_path = "resources/cosmic/cosmic_mutation.tsv"
 
     try:
         df = pd.read_csv(vaf_input)
