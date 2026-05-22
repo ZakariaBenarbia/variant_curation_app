@@ -16,7 +16,6 @@ Application de curation de variants basée sur Django, conçue pour l'ingestion,
 variant_curation_app/
 ├── manage.py
 ├── requirements.txt
-├── db.sqlite3
 │
 ├── curation/
 │   ├── admin.py
