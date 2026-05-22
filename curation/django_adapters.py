@@ -180,13 +180,13 @@ def process_vcf_complete(vcf_path, output_dir, sample_id="sample", analysis_resu
     # Step 5: Populate database with generated content
     if analysis_result:
         try:
-            # Read scores CSV and store as JSON
+            # Read scores CSV and store safely as JSON compatible structures
             import json
             scores_df = pd.read_csv(scores_path)
             
-            # Replace NaN values with None for JSON compatibility
-            scores_df = scores_df.where(pd.notna(scores_df), None)
-            analysis_result.scores_data = scores_df.to_dict('records')
+            # to_json handles all NaN/inf float formatting natively, json.loads produces pristine None items
+            clean_json_str = scores_df.to_json(orient='records')
+            analysis_result.scores_data = json.loads(clean_json_str)
             
             # Read HTML report
             with open(report_path, 'r', encoding='utf-8') as f:
