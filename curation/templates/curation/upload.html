@@ -1,0 +1,295 @@
+{% extends "curation/base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'curation/css/main.css' %}">
+
+<div class="iv-root">
+
+  <!-- Header -->
+  <div class="iv-header">
+    <div>
+      <h1>Importer des variants</h1>
+      <p>Importez un fichier VCF et générez directement le rapport clinique depuis l'interface.</p>
+    </div>
+    <span class="iv-badge">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 8h6M5 5.5h3M5 10.5h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      .vcf &nbsp;·&nbsp; .vcf.gz
+    </span>
+  </div>
+
+  <!-- Error alert -->
+  {% if error %}
+  <div class="iv-alert">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span><strong>Erreur&nbsp;:</strong> {{ error }}</span>
+  </div>
+  {% endif %}
+
+  <!-- Upload form card -->
+  <div class="iv-card">
+    <div class="iv-card-header">
+      <h2>Nouveau fichier</h2>
+    </div>
+    <div class="iv-card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="iv-form-grid">
+
+          <div class="iv-form-group">
+            <label class="iv-label">Fichier VCF</label>
+            {{ form.vcf_file }}
+            <label class="iv-dropzone" id="vcf-dropzone" for="id_vcf_file">
+              <div class="iv-dropzone-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <strong class="iv-dropzone-title" id="vcf-dropzone-title">Glissez-deposez votre fichier ici</strong>
+              <span class="iv-dropzone-sub">ou <u>cliquez pour parcourir</u> · formats : <code>.vcf</code> <code>.vcf.gz</code></span>
+            </label>
+            <span class="iv-help">{{ form.vcf_file.help_text }}. Le nom du fichier sera utilise comme identifiant d'echantillon.</span>
+          </div>
+
+          <div class="iv-form-footer">
+            <button class="iv-btn" type="submit">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v9M4.5 7.5L8 11l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 12.5h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Importer et traiter
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recent uploads card -->
+  <div class="iv-card">
+    <div class="iv-card-header">
+      <h2>Importations récentes</h2>
+      <div class="iv-toolbar">
+        <span>10 dernières entrées</span>
+        <span class="iv-selected-count" id="selected-count">0 sélectionné</span>
+        <button class="iv-btn-sm" id="bulk-delete-btn" type="submit" form="bulk-delete-form" disabled>Supprimer la sélection</button>
+      </div>
+    </div>
+
+    {% if uploads %}
+    <form id="bulk-delete-form" method="post" action="{% url 'curation:bulk_delete_uploads' %}">
+      {% csrf_token %}
+    </form>
+    <div class="iv-table-wrap">
+      <table class="iv-table">
+        <thead>
+          <tr>
+            <th class="iv-check-col"><input type="checkbox" class="iv-check" id="select-all-uploads" aria-label="Tout sélectionner"></th>
+            <th>Titre & Échantillon</th>
+            <th>Importé le</th>
+            <th>Analyse</th>
+            <th>Statut</th>
+            <th class="iv-action-cell">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for upload in uploads %}
+          <tr>
+            <td class="iv-check-col">
+              <input type="checkbox" class="iv-check upload-select-checkbox" name="upload_ids" value="{{ upload.id }}" form="bulk-delete-form" aria-label="Sélectionner {{ upload.title }}">
+            </td>
+            <td>
+              <div style="display: flex; flex-direction: column; gap: 2px;">
+                <a class="iv-link" href="{% url 'curation:generate_report' upload.id %}">{{ upload.title }}</a>
+                
+                {% if upload.sample_name and upload.sample_name != upload.title %}
+                  <span class="iv-subtext">{{ upload.sample_name }}</span>
+                {% endif %}
+              </div>
+            </td>
+            <td class="iv-mono">{{ upload.uploaded_at|date:'Y-m-d H:i' }}</td>
+            <td style="font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink);">
+              {% if upload.analysis_result.scores_data %}
+                {{ upload.analysis_result.scores_data|length }}
+              {% else %}
+                0
+              {% endif %}
+            </td>
+            <td>
+              {% if upload.analysis_result.analysis_status == "completed" %}
+                <span class="iv-pill ok"><span class="iv-pill-dot"></span> Complété</span>
+              {% elif upload.analysis_result.analysis_status == "processing" %}
+                <span class="iv-pill warn"><span class="iv-pill-dot"></span> En cours</span>
+              {% elif upload.analysis_result.analysis_status == "error" %}
+                <span class="iv-pill error"><span class="iv-pill-dot"></span> Erreur</span>
+              {% elif upload.analysis_result.analysis_status == "no_scores" %}
+                <span class="iv-pill error"><span class="iv-pill-dot"></span> Scores non trouvés</span>
+              {% elif upload.analysis_result.analysis_status == "failed" %}
+                <span class="iv-pill error"><span class="iv-pill-dot"></span> Échec</span>
+              {% else %}
+                <span class="iv-pill warn"><span class="iv-pill-dot"></span> En attente</span>
+              {% endif %}
+            </td>
+            <td class="iv-action-cell">
+  <div class="iv-action-row compact">
+    <a class="iv-icon-btn view" href="{% url 'curation:generate_report' upload.id %}" title="Voir le rapport">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+    </a>
+    
+    <div class="iv-icon-group">
+      <a class="iv-icon-btn report" target="_blank" rel="noopener noreferrer" href="{% url 'curation:report_asset' upload.id 'clinical_report_gene_roles.png' %}" title="Rapport Genes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      </a>
+      <a class="iv-icon-btn report" target="_blank" rel="noopener noreferrer" href="{% url 'curation:report_asset' upload.id 'clinical_report_mutation_origin.png' %}" title="Rapport Origine">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+      </a>
+      <a class="iv-icon-btn report" target="_blank" rel="noopener noreferrer" href="{% url 'curation:report_asset' upload.id 'clinical_report_vaf_dist.png' %}" title="Rapport VAF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </a>
+      <a class="iv-icon-btn download" href="{% url 'curation:download_results' upload.id %}" title="Télécharger tous les résultats">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="16 10 12 14 8 10"/>
+          <line x1="12" y1="14" x2="12" y2="3"/>
+        </svg>
+      </a>
+    </div>
+
+    <a class="iv-icon-btn delete" href="{% url 'curation:delete_upload' upload.id %}" title="Supprimer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+    </a>
+  </div>
+</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% else %}
+    <div class="iv-empty">
+      <div class="iv-empty-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="3" width="12" height="14" rx="2" stroke="#7B8EA0" stroke-width="1.4"/><path d="M7 7h6M7 10h4M7 13h3" stroke="#7B8EA0" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <strong>Aucune importation</strong>
+      <span>Utilisez le formulaire ci-dessus pour ajouter votre premier fichier VCF.</span>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var fileInput = document.getElementById("id_vcf_file");
+    var dropzone = document.getElementById("vcf-dropzone");
+    var title = document.getElementById("vcf-dropzone-title");
+
+    if (fileInput && dropzone && title) {
+      function showSelectedName(file) {
+        if (file) {
+          title.textContent = "✓ " + file.name;
+          title.style.color = "var(--blue)";
+        } else {
+          title.textContent = "Glissez-deposez votre fichier ici";
+          title.style.color = "";
+        }
+      }
+
+      ["dragenter", "dragover"].forEach(function (eventName) {
+        dropzone.addEventListener(eventName, function (event) {
+          event.preventDefault();
+          dropzone.classList.add("active");
+        });
+      });
+
+      ["dragleave", "dragend"].forEach(function (eventName) {
+        dropzone.addEventListener(eventName, function () {
+          dropzone.classList.remove("active");
+        });
+      });
+
+      dropzone.addEventListener("drop", function (event) {
+        event.preventDefault();
+        dropzone.classList.remove("active");
+        if (event.dataTransfer.files.length) {
+          fileInput.files = event.dataTransfer.files;
+          showSelectedName(fileInput.files[0]);
+        }
+      });
+
+      fileInput.addEventListener("change", function () {
+        showSelectedName(fileInput.files[0]);
+      });
+    }
+
+    var selectAll = document.getElementById("select-all-uploads");
+    var selectedCount = document.getElementById("selected-count");
+    var bulkDeleteBtn = document.getElementById("bulk-delete-btn");
+    var rowCheckboxes = Array.from(document.querySelectorAll(".upload-select-checkbox"));
+
+    function updateBulkState() {
+      if (!rowCheckboxes.length) {
+        return;
+      }
+
+      var checkedCount = 0;
+      rowCheckboxes.forEach(function (checkbox) {
+        var row = checkbox.closest("tr");
+        if (checkbox.checked) {
+          checkedCount += 1;
+          if (row) {
+            row.classList.add("iv-selected");
+          }
+        } else if (row) {
+          row.classList.remove("iv-selected");
+        }
+      });
+
+      if (selectedCount) {
+        selectedCount.textContent = checkedCount + " sélectionné" + (checkedCount > 1 ? "s" : "");
+      }
+      if (bulkDeleteBtn) {
+        bulkDeleteBtn.disabled = checkedCount === 0;
+      }
+      if (selectAll) {
+        selectAll.checked = checkedCount > 0 && checkedCount === rowCheckboxes.length;
+      }
+    }
+
+    if (selectAll && rowCheckboxes.length) {
+      selectAll.addEventListener("change", function () {
+        rowCheckboxes.forEach(function (checkbox) {
+          checkbox.checked = selectAll.checked;
+        });
+        updateBulkState();
+      });
+    }
+
+    rowCheckboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", updateBulkState);
+    });
+
+    // Allow clicking on cell to toggle checkbox
+    document.querySelectorAll('.iv-check-col').forEach(cell => {
+      cell.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox') {
+          const cb = this.querySelector('.upload-select-checkbox, #select-all-uploads');
+          if (cb) {
+            cb.checked = !cb.checked;
+            cb.dispatchEvent(new Event('change')); // Trigger our state update
+          }
+        }
+      });
+    });
+
+    if (bulkDeleteBtn) {
+      bulkDeleteBtn.addEventListener("click", function (event) {
+        if (bulkDeleteBtn.disabled) {
+          event.preventDefault();
+          return;
+        }
+        var countText = selectedCount ? selectedCount.textContent : "éléments sélectionnés";
+        if (!window.confirm("Êtes-vous sûr de vouloir supprimer les " + countText + " ? Cette action est irréversible.")) {
+          event.preventDefault();
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

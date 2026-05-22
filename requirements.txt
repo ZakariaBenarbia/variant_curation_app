@@ -1,0 +1,8 @@
+Django>=4.2,<5
+pysam
+pandas
+scikit-learn
+matplotlib
+numpy
+psycopg2-binary
+python-decouple

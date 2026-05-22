@@ -1,0 +1,171 @@
+:root {
+    color-scheme: light;
+    --bg: #f9fafb;
+    --surface: #ffffff;
+    --surface-soft: #f3f4f6;
+    --text-primary: #1f2937;
+    --text-secondary: #64748b;
+    --clinical-blue: #0a4d8c;
+    --clinical-blue-dark: #073a6a;
+    --clinical-blue-light: #e8f1f8;
+    --border: #e2e8f0;
+    --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0; padding: 0; min-height: 100%;
+    background: linear-gradient(180deg, #f9fafb 0%, #e8f1f8 100%);
+    color: var(--text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.container {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+header {
+    background: linear-gradient(135deg, var(--clinical-blue), var(--clinical-blue-dark));
+    color: white;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 35px 80px rgba(10, 37, 84, 0.16);
+    margin-bottom: 2rem;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.wordmark { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+.logo {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700;
+}
+
+.wordmark-text strong { font-size: 1.2rem; color: white; display: block; }
+.wordmark-text span { font-size: 0.72rem; color: rgba(255,255,255,0.6); }
+
+/* Navigation */
+.nav-right { display: flex; align-items: center; gap: 0.5rem; }
+
+/* USER CHIP */
+.user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 4px 14px 4px 4px;
+}
+
+.user-avatar {
+    width: 28px; height: 28px;
+    background: #3b82f6; /* Blue circle for ZA */
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: white;
+}
+
+/* ADMIN CHIP - Fixed Syntax */
+.admin-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(239, 159, 39, 0.1);
+    border: 1px solid rgba(239, 159, 39, 0.3);
+    border-radius: 999px;
+    padding: 6px 14px;
+}
+
+.admin-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #EF9F27;
+}
+
+/* TEAM BUTTON */
+.team-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.team-btn svg {
+    width: 13px; height: 13px;
+    margin-right: 0.5rem;
+}
+
+.team-btn:hover {
+    background: rgba(255,255,255,0.25);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    color: rgba(255,255,255,0.75);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.add-member-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    color: rgba(255,255,255,0.75);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.add-member-btn:hover {
+    background: rgba(255,255,255,0.24);
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: white;
+}

@@ -1,0 +1,16 @@
+name: variant-curation-app
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.9
+  - django>=4.2,<5
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - psycopg2
+  - pip
+  - pip:
+    - pysam
+    - python-decouple

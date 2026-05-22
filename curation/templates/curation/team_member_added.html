@@ -1,0 +1,123 @@
+{% extends "curation/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'curation/css/team.css' %}">
+
+<div class="tm-root">
+  <div class="tm-header">
+    <div>
+      <h1>Membre ajouté avec succès</h1>
+      <p>Le nouveau membre a été ajouté à votre équipe</p>
+      <div class="tm-subtitle">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.8"/>
+          <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.6"/>
+        </svg>
+        {{ member.name }} peut maintenant accéder à la plateforme
+      </div>
+    </div>
+  </div>
+
+  <div class="tm-card tm-success-card">
+    <div class="tm-card-body tm-success-body">
+      
+      <!-- Success animation -->
+      <div class="tm-success-animation">
+        <div class="tm-success-circle">
+          <svg class="tm-success-checkmark" width="40" height="40" viewBox="0 0 16 16" fill="none">
+            <path d="M13.5 4.5L6 12l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tm-success-particles">
+          <div class="tm-particle tm-particle-1"></div>
+          <div class="tm-particle tm-particle-2"></div>
+          <div class="tm-particle tm-particle-3"></div>
+          <div class="tm-particle tm-particle-4"></div>
+        </div>
+      </div>
+
+      <!-- Success message -->
+      <h2 class="tm-success-title">{{ member.name }} a été ajouté avec succès</h2>
+      <p class="tm-success-description">
+        Le membre peut maintenant se connecter à la plateforme avec ses identifiants et commencer à utiliser les fonctionnalités disponibles.
+      </p>
+
+      <!-- Member details card -->
+      <div class="tm-member-details">
+        <div class="tm-details-header">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.8"/>
+            <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.6"/>
+          </svg>
+          Informations du compte
+        </div>
+        <div class="tm-details-grid">
+          <div class="tm-detail-item">
+            <div class="tm-detail-label">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.7"/>
+                <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.5"/>
+              </svg>
+              Nom complet
+            </div>
+            <div class="tm-detail-value">{{ member.name }}</div>
+          </div>
+          
+          <div class="tm-detail-item">
+            <div class="tm-detail-label">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4l6 4 6-4v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M2 4l6 4 6-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              </svg>
+              Email
+            </div>
+            <div class="tm-detail-value">{{ member.email }}</div>
+          </div>
+          
+          <div class="tm-detail-item">
+            <div class="tm-detail-label">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Nom d'utilisateur
+            </div>
+            <div class="tm-detail-value">{{ member.user.username }}</div>
+          </div>
+          
+          {% if member.phone %}
+          <div class="tm-detail-item">
+            <div class="tm-detail-label">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M5 2h6a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <path d="M6 5h4M6 7h3M6 9h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Téléphone
+            </div>
+            <div class="tm-detail-value">{{ member.phone }}</div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="tm-success-actions">
+        <a href="{% url 'curation:add_team_member' %}" class="tm-btn tm-btn-primary tm-btn-enhanced">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v12M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Ajouter un autre membre
+        </a>
+        <a href="{% url 'curation:team_members_list' %}" class="tm-btn tm-btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Voir l'équipe
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

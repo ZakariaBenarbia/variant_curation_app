@@ -1,0 +1,78 @@
+{% extends "curation/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'curation/css/delete-confirm.css' %}">
+
+<div class="del-root">
+
+  <!-- Back link -->
+  <a class="del-back" href="{% url 'curation:upload_detail' upload.id %}">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Retour au détail
+  </a>
+
+  <div class="del-card">
+
+    <!-- Warning banner -->
+    <div class="del-banner">
+      <div class="del-banner-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2.5L14 13H2L8 2.5z" stroke="#C5293E" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M8 6.5v3M8 11.5h.01" stroke="#C5293E" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="del-banner-text">
+        <strong>Action irréversible</strong>
+        <span>Cette suppression est définitive. Les variants associés seront également effacés.</span>
+      </div>
+    </div>
+
+    <div class="del-body">
+
+      <!-- Detail block -->
+      <p class="del-section-label">Détails de l'importation</p>
+      <div class="del-details">
+        <div class="del-row">
+          <span class="del-row-key">Titre</span>
+          <span class="del-row-val">{{ upload.title }}</span>
+        </div>
+        <div class="del-row">
+          <span class="del-row-key">Échantillon</span>
+          <span class="del-row-val mono">{{ upload.sample_name|default:'—' }}</span>
+        </div>
+        <div class="del-row">
+          <span class="del-row-key">Importé le</span>
+          <span class="del-row-val mono">{{ upload.uploaded_at|date:'Y-m-d H:i' }}</span>
+        </div>
+        <div class="del-row">
+          <span class="del-row-key">Variants</span>
+          <span class="del-row-val">
+            <span class="del-count">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 4v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              {{ upload.variants.count }} variant{% if upload.variants.count != 1 %}s{% endif %}
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <hr class="del-divider">
+
+      <!-- Action buttons -->
+      <form method="post">
+        {% csrf_token %}
+        <div class="del-actions">
+          <button type="submit" class="del-btn-danger">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V2.5h4V4M5.5 4l.5 9M10.5 4l-.5 9M8 4v9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Supprimer définitivement
+          </button>
+          <a class="del-btn-cancel" href="{% url 'curation:upload_detail' upload.id %}">
+            Annuler
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

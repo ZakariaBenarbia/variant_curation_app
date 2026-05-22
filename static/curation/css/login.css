@@ -1,0 +1,240 @@
+/* Login page styles - extracted from original inline CSS */
+
+:root {
+    --clinical-blue:      #0a4d8c;
+    --clinical-blue-dark: #073a6a;
+    --clinical-blue-lt:   #e8f1f8;
+    --clinical-blue-mid:  #c5d9ed;
+    --ink:                #0D1B2A;
+    --ink-2:              #3A4A5C;
+    --ink-3:              #7B8EA0;
+    --border:             #e2e8f0;
+    --surface:            #ffffff;
+    --page-bg:            #f0f4f9;
+    --red:                #C5293E;
+    --red-lt:             #FFF0F2;
+    --red-mid:            #F5C1C8;
+    --radius:             14px;
+    --shadow:             0 1px 3px rgba(13,27,42,0.07), 0 8px 32px rgba(13,27,42,0.08);
+}
+
+*, *::before, *::after { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+html, body {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #f0f4f9 0%, #ddeaf6 100%);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Card */
+.lc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+}
+
+/* Card top stripe */
+.lc-top {
+    background: linear-gradient(135deg, var(--clinical-blue), var(--clinical-blue-dark));
+    padding: 2rem 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.lc-logo {
+    width: 48px; 
+    height: 48px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.28);
+    border-radius: 13px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.5px;
+}
+
+.lc-titles { 
+    text-align: center; 
+}
+
+.lc-titles h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.3px;
+    margin-bottom: 0.2rem;
+}
+
+.lc-titles p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.62);
+    font-weight: 400;
+}
+
+/* Form body */
+.lc-body { 
+    padding: 1.75rem 2rem 2rem; 
+}
+
+/* Error banner - Clean & Professional */
+.lc-error {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+    color: #991B1B;
+    line-height: 1.4;
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon style */
+.lc-error svg { 
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--red);
+}
+
+/* List cleanup */
+.lc-error ul { 
+    margin: 0; 
+    padding: 0;
+    list-style: none;
+}
+
+.lc-error li { 
+    font-weight: 600;
+}
+
+/* Field */
+.lc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+}
+
+.lc-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+
+/* Input wrapper with icon */
+.lc-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lc-input-icon {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--ink-3);
+    display: flex; 
+    align-items: center;
+    pointer-events: none;
+}
+
+.lc-field input[type="text"],
+.lc-field input[type="password"] {
+    width: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: #f7f9fc;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 0.68rem 0.85rem 0.68rem 2.5rem;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.lc-field input:focus {
+    background: var(--surface);
+    border-color: var(--clinical-blue);
+    box-shadow: 0 0 0 3px rgba(10,77,140,0.1);
+}
+
+.lc-field.has-error input {
+    border-color: var(--red);
+    background: var(--red-lt);
+}
+
+.lc-field-err {
+    font-size: 0.75rem;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Submit */
+.lc-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0.78rem 1rem;
+    margin-top: 1.5rem;
+    background: var(--clinical-blue);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.1px;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.lc-submit:hover {
+    background: var(--clinical-blue-dark);
+    box-shadow: 0 6px 20px rgba(10,77,140,0.22);
+}
+
+.lc-submit:active { 
+    transform: scale(0.98); 
+}
+
+/* Footer note */
+.lc-footer {
+    text-align: center;
+    font-size: 0.73rem;
+    color: var(--ink-3);
+    margin-top: 3rem;
+}

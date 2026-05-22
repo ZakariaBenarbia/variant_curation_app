@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curation de variants</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'curation/css/base.css' %}">
+</head>
+<body>
+<header>
+    <div class="container">
+        <a class="wordmark" href="/">
+            <div class="logo">V</div>
+            <div class="wordmark-text">
+                <strong>VarCurate</strong>
+                <span>Curation clinique</span>
+            </div>
+        </a>
+        <div class="nav-right">
+            {% if request.user.is_authenticated %}
+                <div class="user-chip">
+                    <div class="user-avatar">
+                        {{ request.user.first_name|default:request.user.username|slice:":2" }}
+                    </div>
+                    <span class="user-name">{{ request.user.first_name|default:request.user.username }}</span>
+                </div>
+
+                {% if request.user.is_staff %}
+                <div class="admin-chip" title="Administrateur">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="#EF9F27" opacity="0.9"/>
+                        <path d="M11.5 9.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 0 1H12v.5a.5.5 0 0 1-1 0V11h-.5a.5.5 0 0 1 0-1h.5v-.5a.5.5 0 0 1 .5-.5z" fill="#EF9F27"/>
+                        <path d="M3 13c0-2.21 2.24-4 5-4 .37 0 .73.03 1.07.1A3.5 3.5 0 0 0 8.5 14H3.5A.5.5 0 0 1 3 13z" fill="#EF9F27" opacity="0.7"/>
+                        <circle cx="11.5" cy="11.5" r="3" stroke="#EF9F27" stroke-width="1.2" fill="none"/>
+                    </svg>
+                    <span class="admin-label">Admin</span>
+                </div>
+                {% endif %}
+                {% if request.user.is_staff %}
+            <a href="{% url 'curation:team_members_list' %}" class="logout-btn">
+                Équipe
+            </a>
+            {% endif %}
+                <a href="{% url 'logout' %}" class="logout-btn">
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                        <path d="M5.5 7H12M9.5 4.5L12 7l-2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 2H3a1 1 0 00-1 1v8a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                    Déconnexion
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-btn">
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7h8M7 4.5L9.5 7 7 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 2h4a1 1 0 011 1v8a1 1 0 01-1 1H7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                    Connexion
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,533 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+/* Root variables */
+:root {
+  --blue:     #1849D6;
+  --blue-lt:  #EBF1FF;
+  --blue-mid: #D0DFFE;
+  --ink:      #0D1B2A;
+  --ink-2:    #3A4A5C;
+  --ink-3:    #7B8EA0;
+  --border:   #E2E8F0;
+  --surface:  #F7F9FC;
+  --white:    #FFFFFF;
+  --red:      #C5293E;
+  --red-lt:   #FFF0F2;
+  --green:    #1A7F5A;
+  --green-lt: #EDFAF4;
+  --radius:   14px;
+  --shadow:   0 1px 3px rgba(13,27,42,0.07), 0 4px 16px rgba(13,27,42,0.05);
+}
+
+/* Main container */
+.iv-root {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+/* Header */
+.iv-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.iv-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+}
+
+.iv-header p {
+  font-size: 0.95rem;
+  color: var(--ink-3);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.iv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--blue-lt);
+  color: var(--blue);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--blue-mid);
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+}
+
+.iv-badge svg { flex-shrink: 0; }
+
+/* Alert */
+.iv-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--red-lt);
+  border: 1px solid #F5C1C8;
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--red);
+}
+
+.iv-alert strong { font-weight: 600; }
+
+/* Cards */
+.iv-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.iv-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.iv-card-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.iv-card-header span {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.iv-card-body { padding: 1.5rem; }
+
+/* Form */
+.iv-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.iv-form-group { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.4rem; 
+}
+
+.iv-form-group.full { 
+  grid-column: 1 / -1; 
+}
+
+.iv-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.iv-help { 
+  font-size: 0.8rem; 
+  color: var(--ink-3); 
+}
+
+.iv-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px dashed var(--blue-mid);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.25rem;
+  background: var(--blue-lt);
+  cursor: pointer;
+  transition: border-color 0.18s cubic-bezier(.4,0,.2,1), background 0.18s cubic-bezier(.4,0,.2,1), transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.18s cubic-bezier(.4,0,.2,1);
+}
+
+.iv-dropzone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(24,73,214,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.iv-dropzone:hover {
+  border-color: var(--blue);
+  background: #dfe9ff;
+  transform: scale(1.005);
+}
+
+.iv-dropzone.active {
+  border-color: var(--blue);
+  background: #d4e2ff;
+  transform: scale(1.01);
+  box-shadow: 0 0 0 4px rgba(24,73,214,.15);
+}
+
+.iv-dropzone-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--white);
+  border: 1px solid var(--blue-mid);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  box-shadow: 0 2px 6px rgba(24,73,214,.15);
+  transition: transform 0.18s cubic-bezier(.4,0,.2,1);
+  z-index: 1;
+}
+
+.iv-dropzone:hover .iv-dropzone-icon { 
+  transform: translateY(-2px); 
+}
+
+.iv-dropzone-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  z-index: 1;
+}
+
+.iv-dropzone-sub {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  line-height: 1.4;
+  z-index: 1;
+}
+
+.iv-dropzone-sub code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.76rem;
+  background: var(--white);
+  border: 1px solid var(--blue-mid);
+  color: var(--blue);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+}
+
+.iv-root input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+
+/* Override Django widget styles */
+.iv-root input[type="text"],
+.iv-root input[type="file"],
+.iv-root select,
+.iv-root textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.93rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.iv-root input[type="text"]:focus,
+.iv-root input[type="file"]:focus,
+.iv-root select:focus { 
+  border-color: var(--blue); 
+  box-shadow: 0 0 0 3px rgba(24,73,214,0.1); 
+}
+
+.iv-form-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.iv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.iv-btn:hover { background: #1238b0; }
+.iv-btn:active { transform: scale(0.97); }
+
+/* Table */
+.iv-table-wrap { overflow-x: auto; }
+
+table.iv-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.iv-table thead tr {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.iv-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.iv-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.iv-table tbody tr:last-child td { border-bottom: none; }
+.iv-table tbody tr { transition: background 0.1s; }
+.iv-table tbody tr:hover { background: var(--surface); }
+
+.iv-link {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.iv-link:hover { text-decoration: underline; }
+
+.iv-mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+
+/* Pill status */
+.iv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.iv-pill.ok   { background: var(--green-lt); color: var(--green); border: 1px solid #B8EDD6; }
+.iv-pill.warn { background: var(--red-lt);   color: var(--red);   border: 1px solid #F5C1C8; }
+.iv-pill.error { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+.iv-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* Action buttons */
+.iv-action-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.iv-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.12s, transform 0.1s;
+}
+
+.iv-act:hover { opacity: 0.85; }
+.iv-act:active { transform: scale(0.96); }
+.iv-act.view   { background: var(--blue-lt); color: var(--blue); border: 1px solid var(--blue-mid); }
+.iv-act.delete { background: var(--red-lt);  color: var(--red);  border: 1px solid #F5C1C8; }
+
+/* Empty state */
+.iv-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 3rem 1rem;
+  color: var(--ink-3);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.iv-empty-icon {
+  width: 44px; height: 44px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.iv-empty strong { font-weight: 600; color: var(--ink-2); }
+
+/* Toolbar */
+.iv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.iv-btn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--red-lt);
+  color: var(--red);
+  border: 1px solid #F5C1C8;
+  border-radius: 999px;
+  padding: 0.36rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.iv-btn-sm:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.iv-selected-count {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+/* Hide checkboxes by default */
+.iv-check-col {
+  width: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.iv-check {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+  cursor: pointer;
+  /* Transition for a smooth fade-in effect */
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Show checkbox when row is hovered OR when checkbox is already checked */
+.iv-table tbody tr:hover .iv-check,
+.iv-check:checked {
+  opacity: 1;
+}
+
+/* Keep header checkbox visible or slightly dimmed so users know it exists */
+.iv-table thead .iv-check {
+  opacity: 0.4;
+}
+
+.iv-table thead:hover .iv-check {
+  opacity: 1;
+}
+
+/* Visual indicator for selected rows */
+.iv-table tbody tr.iv-selected {
+  background-color: var(--blue-lt) !important;
+}
+
+/* Center column header and cell content */
+.iv-table th:last-child, 
+.iv-table td:last-child {
+  text-align: center;
+}
+
+/* Update the action row to center its items */
+.iv-action-row.compact { 
+  display: flex; 
+  gap: 0.4rem; 
+  align-items: center; 
+  justify-content: center; /* This centers icons horizontally */
+}
+
+/* Optional: Soften dividers for a more "integrated" feel */
+.iv-icon-group {
+  display: flex;
+  gap: 0.2rem;
+  padding: 0 0.4rem;
+  border-left: 1.5px solid var(--border);
+  border-right: 1.5px solid var(--border);
+  margin: 0 0.2rem;
+}
+
+.iv-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  color: var(--ink-3);
+  background: transparent;
+}
+
+.iv-icon-btn.view:hover { background: var(--blue-lt); color: var(--blue); }
+.iv-icon-btn.report:hover { background: #EEF9F8; color: var(--teal); }
+.iv-icon-btn.delete:hover { background: var(--red-lt); color: var(--red); }
+.iv-icon-btn.download:hover { background: var(--green-lt); color: var(--green); }
+
+.iv-subtext {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .iv-form-grid { grid-template-columns: 1fr; }
+  .iv-form-group.full { grid-column: auto; }
+}

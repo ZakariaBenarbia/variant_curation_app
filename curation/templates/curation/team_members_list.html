@@ -1,0 +1,106 @@
+{% extends 'curation/base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'curation/css/team.css' %}">
+
+<div class="tm-root">
+  <div class="tm-header">
+    <div>
+      <h1>Gérer l'équipe</h1>
+      <p>Ajoutez et gérez les membres de votre équipe de curation</p>
+      <div class="tm-badge">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.9"/>
+          <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.7"/>
+        </svg>
+        {{ team_members|length }} membre{{ team_members|length|pluralize:"s" }}
+      </div>
+    </div>
+    <a href="{% url 'curation:add_team_member' %}" class="tm-btn">
+      Ajouter un membre
+    </a>
+  </div>
+        
+                        {% if team_members %}
+<div class="tm-card">
+    <div class="tm-card-header">
+        <h2>Membres de l'équipe</h2>
+    </div>
+    <div class="tm-card-body">
+        <div class="iv-table-wrap">
+            <table class="iv-table tm-enhanced-table">
+                <thead>
+                    <tr>
+                        <th class="tm-name-header">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right: 4px;">
+                                <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.8"/>
+                                <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.6"/>
+                            </svg>
+                            Nom
+                        </th>
+                        <th class="tm-email-header">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right: 4px;">
+                                <path d="M2 4l6 4 6-4v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M2 4l6 4 6-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            </svg>
+                            Email
+                        </th>
+                        <th class="tm-phone-header">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right: 4px;">
+                                <path d="M5 2h6a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M6 5h4M6 7h3M6 9h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            Téléphone
+                        </th>
+                                                <th class="tm-pass-header">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="margin-right: 4px;">
+                                <rect x="3" y="6" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                <path d="M5 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <circle cx="8" cy="10" r="1" fill="currentColor"/>
+                            </svg>
+                            Mot de passe
+                        </th>
+                        <th class="iv-action-cell tm-actions-header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in team_members %}
+                    <tr class="tm-member-row">
+                        <td class="tm-name-cell">
+                            <div class="tm-member-name">
+                                <div class="tm-avatar">{{ member.name|slice:":2"|upper }}</div>
+                                <strong>{{ member.name }}</strong>
+                            </div>
+                        </td>
+                        <td class="tm-email-cell">
+                            <a href="mailto:{{ member.email }}" class="tm-email-link">{{ member.email }}</a>
+                        </td>
+                        <td class="tm-phone-cell">{{ member.phone|default:'-' }}</td>
+                        <td class="tm-pass-cell">
+                            <code class="tm-pass-code">{{ member.password }}</code>
+                        </td>
+                        <td class="iv-action-cell tm-actions-cell">
+                            <a href="{% url 'curation:delete_team_member' member.id %}" class="tm-btn tm-btn-danger tm-btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer {{ member.name }} ?')">
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                                    <path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1m3 0v9a1 1 0 01-1 1H4a1 1 0 01-1-1V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+        <div class="tm-empty">
+            <strong>Aucun membre d'équipe trouvé</strong>
+            <span><a href="{% url 'curation:add_team_member' %}">Ajoutez le premier membre</a> pour commencer.</span>
+        </div>
+        {% endif %}
+</div>
+
+{% endblock %}

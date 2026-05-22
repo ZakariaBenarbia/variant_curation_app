@@ -1,0 +1,108 @@
+{% extends 'curation/base.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'curation/css/team.css' %}">
+
+<div class="tm-root">
+  <div class="tm-header">
+    <div>
+      <h1>Ajouter un membre d'équipe</h1>
+      <p>Invitez un nouveau membre à rejoindre votre équipe</p>
+      <div class="tm-subtitle">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.8"/>
+          <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.6"/>
+        </svg>
+        Créer un compte pour un nouveau collaborateur
+      </div>
+    </div>
+  </div>
+
+  <div class="tm-card tm-form-card">
+    <div class="tm-card-header">
+      <h2>Informations du membre</h2>
+      <div class="tm-form-indicator">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2a6 6 0 100 12 6 6 0 000-12z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Remplir les champs obligatoires
+      </div>
+    </div>
+    <div class="tm-card-body">
+      <form method="post" class="tm-form tm-enhanced-form">
+        {% csrf_token %}
+        
+        <div class="tm-field tm-field-enhanced">
+          <label class="tm-label tm-label-enhanced" for="name">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z" fill="currentColor" opacity="0.8"/>
+              <path d="M3 13c0-2.21 2.24-4 5-4s5 1.79 5 4v1H3v-1z" fill="currentColor" opacity="0.6"/>
+            </svg>
+            Nom complet
+            <span class="tm-required">*</span>
+          </label>
+          <input type="text" id="name" name="name" class="tm-input tm-input-enhanced" placeholder="Abdi kader" required>
+          <div class="tm-input-help">Nom et prénom du membre</div>
+        </div>
+        
+        <div class="tm-field tm-field-enhanced">
+          <label class="tm-label tm-label-enhanced" for="email">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4l6 4 6-4v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M2 4l6 4 6-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+            Adresse email
+            <span class="tm-required">*</span>
+          </label>
+          <input type="email" id="email" name="email" class="tm-input tm-input-enhanced" placeholder="Abdi.kader@exemple.com" required>
+          <div class="tm-input-help">Email professionnel pour la connexion</div>
+        </div>
+        
+        <div class="tm-field tm-field-enhanced">
+          <label class="tm-label tm-label-enhanced" for="phone">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 2h6a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M6 5h4M6 7h3M6 9h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Téléphone
+          </label>
+          <input type="tel" id="phone" name="phone" class="tm-input tm-input-enhanced" placeholder="+213 6 12 34 56 78">
+          <div class="tm-input-help">Numéro de téléphone (optionnel)</div>
+        </div>
+        
+        <div class="tm-field tm-field-enhanced">
+          <label class="tm-label tm-label-enhanced" for="password">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="3" y="6" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M5 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="8" cy="10" r="1" fill="currentColor"/>
+            </svg>
+            Mot de passe
+            <span class="tm-required">*</span>
+          </label>
+          <input type="password" id="password" name="password" class="tm-input tm-input-enhanced" placeholder="•••••••••" required>
+          <div class="tm-input-help">Mot de passe sécurisé pour le compte</div>
+        </div>
+        
+        <div class="tm-form-actions">
+          <button type="submit" class="tm-btn tm-btn-primary tm-btn-submit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v12M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Ajouter le membre
+          </button>
+          <a href="{% url 'curation:team_members_list' %}" class="tm-btn tm-btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 6l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Annuler
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
