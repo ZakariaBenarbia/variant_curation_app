@@ -179,8 +179,8 @@ Enregistre les étapes de traitement, les statuts et les messages de log.
 3. Téléchargez ou affichez le rapport clinique généré si disponible.
 
 **Ajouter un membre de l'équipe :**
-1. Allez dans le panneau d'administration Django.
-2. Ajoutez un nouveau `TeamMember`.
+1. Ajoutez un nouveau membre directement depuis l'application ou via le panneau d'administration Django.
+2. Remplissez le formulaire de création de membre.
 3. Un compte utilisateur est créé automatiquement.
 
 ## Caractéristiques Clés
