@@ -93,7 +93,7 @@ def main():
     vaf_input = snakemake.input.vaf_csv
     output_path = snakemake.output.features
     census_path = "resources/cosmic/CancerGeneCensus.tsv"
-    mutation_path = "resources/cosmic/cosmic_mutation.tsv"
+    mutation_path = "resources/cosmic/COSMIC_subset.tsv"
 
     try:
         df = pd.read_csv(vaf_input)
