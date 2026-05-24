@@ -598,14 +598,22 @@ section{{background:#fff;border-radius:var(--radius);padding:2rem 2.5rem;box-sha
   outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,77,140,.1)
 }}
 .btn{{
-  padding:.5rem 1.25rem;background:var(--blue);color:#fff;
-  border:none;border-radius:6px;cursor:pointer;font-weight:600;
-  font-size:.875rem;font-family:'IBM Plex Sans',sans-serif;transition:background .15s
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.48rem 1rem;border-radius:6px;cursor:pointer;font-weight:600;
+  font-size:.8rem;font-family:'IBM Plex Sans',sans-serif;
+  transition:all .18s;white-space:nowrap;
 }}
-.btn:hover{{background:#073A6A}}
-.btn-excel{{background:#16A34A;padding:.55rem 1.5rem;font-size:.9rem;letter-spacing:.02em}}
-.btn-excel:hover{{background:#15803D;box-shadow:0 2px 8px rgba(22,163,74,.35)}}
-#filter-count{{font-size:.8rem;color:var(--ink3);font-weight:500}}
+.btn-clear{{
+  background:#fff;color:var(--ink2);
+  border:1.5px solid var(--border2);
+}}
+.btn-clear:hover{{background:#F3F4F6;border-color:#9CA3AF;color:var(--ink)}}
+.btn-excel{{
+  background:#16A34A;color:#fff;border:1.5px solid #16A34A;
+  box-shadow:0 1px 3px rgba(22,163,74,.25);
+}}
+.btn-excel:hover{{background:#15803D;border-color:#15803D;box-shadow:0 3px 8px rgba(22,163,74,.35)}}
+#filter-count{{font-size:.75rem;color:var(--ink3);font-weight:500;white-space:nowrap}}
 .tbl-wrap{{overflow-x:visible;border-radius:8px;border:1px solid var(--border)}}
 .vtable{{width:100%;border-collapse:separate;border-spacing:0;font-size:.85rem}}
 .vtable thead th{{
@@ -712,15 +720,19 @@ footer{{
       <label>Min VAF</label>
       <input id="f-vaf" type="number" placeholder="0.00" min="0" max="1" step="0.01">
     </div>
-    <div class="filter-group" style="display:flex;align-items:flex-end;gap:.75rem">
-      <button class="btn" id="btn-clear">Clear Filters</button>
-      <span id="filter-count"></span>
+    <div class="filter-group" style="display:flex;align-items:flex-end;gap:.5rem">
+      <button class="btn btn-clear" id="btn-clear">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Clear
+      </button>
+      <button class="btn btn-excel" id="btn-excel" title="Export visible rows to Excel">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export
+      </button>
     </div>
   </div>
-  <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
-    <button class="btn btn-excel" id="btn-excel" title="Download visible rows as Excel">
-      ⬇&nbsp;&nbsp;Download Excel
-    </button>
+  <div style="margin-bottom:.75rem">
+    <span id="filter-count" style="font-size:.8rem;color:var(--ink3);font-weight:500"></span>
   </div>
   <div class="tbl-wrap">{html_table}</div>
 </section>
