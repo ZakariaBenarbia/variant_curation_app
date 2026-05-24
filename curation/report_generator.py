@@ -425,11 +425,12 @@ def main(input_file=None, output_file=None, vaf_plot_path=None,
         fn(*args)
         print("  ✓ Done")
 
+    # AI Score column excluded from display — used internally for sorting/classification only
     col_order = [
         "_priority", "_gene_link", gene_role_col, origin_col,
         "tumor_type", "loh_status",
         "chrom", "pos", "ref", "alt", "vaf", "depth",
-        "_cosmic_fmt", "mut_status", score_col,
+        "_cosmic_fmt", "mut_status",
     ]
     display_cols = [c for c in col_order if c and c in df.columns]
     rename = {
@@ -447,7 +448,6 @@ def main(input_file=None, output_file=None, vaf_plot_path=None,
         "depth": "Depth",
         "_cosmic_fmt": "COSMIC ID",
         "mut_status": "Mutation Status",
-        score_col: "AI Score",
     }
     df_display = df[display_cols].rename(columns={k: v for k, v in rename.items() if k in display_cols})
 
