@@ -598,9 +598,11 @@ section{{background:#fff;border-radius:var(--radius);padding:2rem 2.5rem;box-sha
   outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,77,140,.1)
 }}
 .btn{{
-  padding:.5rem 1.25rem;background:var(--blue);color:#fff;
-  border:none;border-radius:6px;cursor:pointer;font-weight:600;
-  font-size:.875rem;font-family:'IBM Plex Sans',sans-serif;transition:background .15s
+  padding:.5rem 1.1rem;background:var(--blue);color:#fff;
+  border:none;border-radius:6px;cursor:pointer;font-weight:700;
+  font-size:.875rem;font-family:'IBM Plex Sans',sans-serif;
+  letter-spacing:.01em;transition:background .15s;
+  box-shadow:0 1px 4px rgba(10,77,140,.2);
 }}
 .btn:hover{{background:#073A6A}}
 .btn-excel{{
@@ -719,7 +721,7 @@ footer{{
       <input id="f-vaf" type="number" placeholder="0.00" min="0" max="1" step="0.01">
     </div>
     <div class="filter-group" style="display:flex;align-items:flex-end;gap:.5rem">
-      <button class="btn" id="btn-clear">Clear Filters</button>
+      <button class="btn" id="btn-clear">Clear</button>
       <button class="btn-excel" id="btn-excel" title="Export visible rows to Excel">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8.5 17l1.5-2.5L8.3 12h1.3l.9 1.6.9-1.6h1.2l-1.7 2.5 1.8 2.5h-1.3l-1-.8-.9 2H8.5zm3.8 0v-5h1.1v4h2.1v1h-3.2z"/></svg>
         Excel
