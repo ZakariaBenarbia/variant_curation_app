@@ -827,7 +827,6 @@ const T = {{
     ft_res_title:"Clickable Resources",
     ft_res_body:"<strong>Gene</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → COSMIC mutation identifier",
     ft_legal:"<strong>For Research Use Only.</strong> This report is generated for academic and thesis purposes. Clinical decisions should not be made based solely on this analysis without proper validation and consultation with qualified healthcare professionals.",
-    tbl_headers:["Priority","Gene","Gene Role","Origin","Tumor Type","LOH Status","Chr","Position","Ref","Alt","VAF","Depth","COSMIC ID","Mutation Status"],
     dir:"ltr"
   }},
   fr: {{
@@ -863,7 +862,6 @@ const T = {{
     ft_res_title:"Ressources cliquables",
     ft_res_body:"<strong>Gène</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → Identifiant de mutation COSMIC",
     ft_legal:"<strong>À des fins de recherche uniquement.</strong> Ce rapport est généré à des fins académiques et de thèse. Les décisions cliniques ne doivent pas être prises uniquement sur la base de cette analyse sans validation appropriée et consultation de professionnels de santé qualifiés.",
-    tbl_headers:["Priorité","Gène","Rôle du gène","Origine","Type de tumeur","Statut LOH","Chr","Position","Réf","Alt","VAF","Profondeur","COSMIC ID","Statut de mutation"],
     dir:"ltr"
   }},
   ar: {{
@@ -899,37 +897,56 @@ const T = {{
     ft_res_title:"روابط تفاعلية",
     ft_res_body:"<strong>الجين</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → معرّف طفرة COSMIC",
     ft_legal:"<strong>للاستخدام البحثي فقط.</strong> تم إنشاء هذا التقرير لأغراض أكاديمية ورسائل الدكتوراه. لا ينبغي اتخاذ القرارات السريرية بناءً على هذا التحليل وحده دون التحقق المناسب واستشارة متخصصين في الرعاية الصحية.",
-    tbl_headers:["الأولوية","الجين","دور الجين","المصدر","نوع الورم","حالة LOH","كروموسوم","الموضع","Ref","Alt","VAF","العمق","COSMIC ID","حالة الطفرة"],
     dir:"rtl"
   }}
 }};
 
 // ── LANG SWITCHER ─────────────────────────────────────────────────────────────
+// Snapshot of original badge texts and option texts on first load
+const _origBadgeCritical = [];
+const _origBadgeModerate = [];
+const _origBadgeLow      = [];
+document.querySelectorAll('.badge.critical').forEach(el => _origBadgeCritical.push(el.textContent));
+document.querySelectorAll('.badge.moderate').forEach(el => _origBadgeModerate.push(el.textContent));
+document.querySelectorAll('.badge.low').forEach(el => _origBadgeLow.push(el.textContent));
+
+// Snapshot original option text for selects with data-i18n options
+const _origOptions = {{}};
+document.querySelectorAll('option[data-i18n]').forEach(el => {{
+  const key = el.getAttribute('data-i18n');
+  if (!_origOptions[key]) _origOptions[key] = el.textContent;
+}});
+
 function setLang(lang) {{
   const t = T[lang];
   document.documentElement.setAttribute('dir', t.dir);
   document.documentElement.setAttribute('lang', lang);
 
-  // Swap all data-i18n elements
+  // Swap non-table, non-option data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {{
+    if (el.tagName === 'OPTION') return; // handle options separately
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.innerHTML = t[key];
   }});
 
-  // Swap badge text inside rows
+  // Swap option text safely (textContent only, preserves value attribute)
+  document.querySelectorAll('option[data-i18n]').forEach(el => {{
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  }});
+
+  // Swap badge text inside table rows
   document.querySelectorAll('.badge.critical').forEach(el => el.textContent = t.badge_critical);
   document.querySelectorAll('.badge.moderate').forEach(el => el.textContent = t.badge_moderate);
   document.querySelectorAll('.badge.low').forEach(el => el.textContent = t.badge_low);
-
-  // Swap table headers
-  const ths = document.querySelectorAll('#vtable thead th');
-  t.tbl_headers.forEach((h, i) => {{ if (ths[i]) ths[i].textContent = h; }});
 
   // Update showing count text
   const countEl = document.getElementById('filter-count');
   const vis = Array.from(document.querySelectorAll('#vtable tbody tr')).filter(r => r.style.display !== 'none').length;
   const total = document.querySelectorAll('#vtable tbody tr').length;
-  countEl.textContent = t.showing.replace('{{v}}', vis).replace('{{t}}', total);
+  if (countEl.textContent) {{
+    countEl.textContent = t.showing.replace('{{v}}', vis).replace('{{t}}', total);
+  }}
 
   // Active button style
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
@@ -1002,8 +1019,8 @@ document.querySelectorAll('.lang-btn').forEach(btn => {{
   }});
 }})();
 
-// Init default language
-setLang('en');
+// Init — mark EN active without re-rendering anything (page already in English)
+document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
 </script>
 </body>
 </html>"""
