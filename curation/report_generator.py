@@ -650,66 +650,101 @@ footer{{
   .h-topbar{{flex-wrap:wrap;gap:.5rem}}
   section,footer{{padding:1.5rem}}
 }}
+@media(max-width:768px){{
+  .h-body{{grid-template-columns:1fr;}}
+  .h-meta{{grid-template-columns:1fr 1fr;min-width:unset}}
+  .h-topbar{{flex-wrap:wrap;gap:.5rem}}
+  section,footer{{padding:1.5rem}}
+}}
 @media print{{body{{background:#fff}} .vtable tbody tr:hover{{background:#fff}}}}
+.lang-bar{{
+  display:flex;align-items:center;gap:.6rem;
+  background:#fff;border-radius:var(--radius);
+  padding:.7rem 1.25rem;box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}}
+.lang-bar-label{{
+  font-size:.72rem;font-weight:600;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.07em;margin-right:.25rem;
+}}
+.lang-btn{{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.38rem .9rem;border-radius:5px;border:1.5px solid var(--border2);
+  background:#fff;color:var(--ink2);font-size:.8rem;font-weight:600;
+  font-family:'IBM Plex Sans',sans-serif;cursor:pointer;
+  transition:all .18s;letter-spacing:.02em;
+}}
+.lang-btn:hover{{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}}
+.lang-btn.active{{
+  background:var(--blue);color:#fff;border-color:var(--blue);
+  box-shadow:0 2px 6px rgba(10,77,140,.25);
+}}
+.lang-btn .flag{{font-size:1rem;line-height:1}}
 </style>
 </head>
 <body>
 <div class="wrap">
+<div class="lang-bar">
+  <span class="lang-bar-label" data-i18n="lang_label">Language</span>
+  <button class="lang-btn active" data-lang="en"><span class="flag">🇬🇧</span> English</button>
+  <button class="lang-btn" data-lang="fr"><span class="flag">🇫🇷</span> Français</button>
+  <button class="lang-btn" data-lang="ar"><span class="flag">🇩🇿</span> العربية</button>
+</div>
 <header>
   <div class="h-topbar">
     <div class="h-logo">
       <div class="h-logo-icon">V</div>
       <div class="h-logo-text">
         <div class="h-logo-name">VarCurate</div>
-        <div class="h-logo-tagline">Curation clinique</div>
+        <div class="h-logo-tagline" data-i18n="tagline">Clinical Curation</div>
       </div>
     </div>
-    <div class="h-badge">AI-Powered Pipeline v3.0 · GRCh38</div>
+    <div class="h-badge" data-i18n="badge">AI-Powered Pipeline v3.0 · GRCh38</div>
   </div>
   <div class="h-body">
     <div class="h-left">
-      <div class="h-eyebrow">Genomic Analysis Report</div>
-      <div class="h-title">Clinical Genomic Report</div>
-      <div class="h-sub">Analyse des variants alléliques · Genomic Variant Analysis</div>
+      <div class="h-eyebrow" data-i18n="eyebrow">Genomic Analysis Report</div>
+      <div class="h-title" data-i18n="title">Clinical Genomic Report</div>
+      <div class="h-sub" data-i18n="subtitle">Allelic Variant Analysis · Genomic Variant Analysis</div>
     </div>
     <div class="h-meta">
-      <div class="meta-pill"><div class="meta-label">Sample ID</div><div class="meta-val">{sample_id}</div></div>
-      <div class="meta-pill"><div class="meta-label">Analysis Date</div><div class="meta-val">{now.strftime('%Y-%m-%d')}</div></div>
-      <div class="meta-pill"><div class="meta-label">Pipeline</div><div class="meta-val">AI-Powered v3.0</div></div>
-      <div class="meta-pill"><div class="meta-label">Reference</div><div class="meta-val">GRCh38</div></div>
+      <div class="meta-pill"><div class="meta-label" data-i18n="meta_sample">Sample ID</div><div class="meta-val">{sample_id}</div></div>
+      <div class="meta-pill"><div class="meta-label" data-i18n="meta_date">Analysis Date</div><div class="meta-val">{now.strftime('%Y-%m-%d')}</div></div>
+      <div class="meta-pill"><div class="meta-label" data-i18n="meta_pipeline">Pipeline</div><div class="meta-val">AI-Powered v3.0</div></div>
+      <div class="meta-pill"><div class="meta-label" data-i18n="meta_ref">Reference</div><div class="meta-val">GRCh38</div></div>
     </div>
   </div>
 </header>
 <div class="cards">
-  <div class="card"><div class="card-num">{n_total}</div><div class="card-lbl">Total des variantes</div></div>
-  <div class="card red"><div class="card-num">{n_critical}</div><div class="card-lbl">Signification très forte</div></div>
-  <div class="card amber"><div class="card-num">{n_moderate}</div><div class="card-lbl">Signification potentielle</div></div>
-  <div class="card teal"><div class="card-num">{n_loh}</div><div class="card-lbl">perte de l'hétérozygotie (LOH)</div></div>
-  <div class="card blue2"><div class="card-num">{n_somatic}</div><div class="card-lbl">Mutations somatiques</div></div>
-  <div class="card purple"><div class="card-num">{n_onco}</div><div class="card-lbl">Oncogènes</div></div>
-  <div class="card orange"><div class="card-num">{n_tsg}</div><div class="card-lbl">Suppresseurs de tumeurs</div></div>
-  <div class="card dual"><div class="card-num">{n_dual}</div><div class="card-lbl">Oncogène / TSG</div></div>
+  <div class="card"><div class="card-num">{n_total}</div><div class="card-lbl" data-i18n="card_total">Total Variants</div></div>
+  <div class="card red"><div class="card-num">{n_critical}</div><div class="card-lbl" data-i18n="card_critical">Very Strong Significance</div></div>
+  <div class="card amber"><div class="card-num">{n_moderate}</div><div class="card-lbl" data-i18n="card_moderate">Potential Significance</div></div>
+  <div class="card teal"><div class="card-num">{n_loh}</div><div class="card-lbl" data-i18n="card_loh">Loss of Heterozygosity (LOH)</div></div>
+  <div class="card blue2"><div class="card-num">{n_somatic}</div><div class="card-lbl" data-i18n="card_somatic">Somatic Mutations</div></div>
+  <div class="card purple"><div class="card-num">{n_onco}</div><div class="card-lbl" data-i18n="card_onco">Oncogenes</div></div>
+  <div class="card orange"><div class="card-num">{n_tsg}</div><div class="card-lbl" data-i18n="card_tsg">Tumor Suppressors</div></div>
+  <div class="card dual"><div class="card-num">{n_dual}</div><div class="card-lbl" data-i18n="card_dual">Oncogene / TSG</div></div>
 </div>
 <section>
-  <h2 class="sec-title">Detailed Variant Analysis</h2>
+  <h2 class="sec-title" data-i18n="sec_title">Detailed Variant Analysis</h2>
   <div class="filters">
     <div class="filter-group">
-      <label>Priority</label>
+      <label data-i18n="f_priority">Priority</label>
       <select id="f-priority">
-        <option value="">All</option>
-        <option value="très forte">Signification très forte</option>
-        <option value="potentielle">Signification potentielle</option>
-        <option value="inconnue">Signification inconnue</option>
+        <option value="" data-i18n="f_all">All</option>
+        <option value="très forte" data-i18n="f_critical">Very Strong Significance</option>
+        <option value="potentielle" data-i18n="f_moderate">Potential Significance</option>
+        <option value="inconnue" data-i18n="f_unknown">Unknown Significance</option>
       </select>
     </div>
     <div class="filter-group">
-      <label>Gene</label>
+      <label data-i18n="f_gene">Gene</label>
       <input id="f-gene" type="text" placeholder="e.g. TP53">
     </div>
     <div class="filter-group">
-      <label>Origin</label>
+      <label data-i18n="f_origin">Origin</label>
       <select id="f-origin">
-        <option value="">All</option>
+        <option value="" data-i18n="f_all">All</option>
         <option value="Somatic">Somatic</option>
         <option value="Strictly Somatic">Strictly Somatic</option>
         <option value="Germline">Germline</option>
@@ -717,14 +752,14 @@ footer{{
       </select>
     </div>
     <div class="filter-group">
-      <label>Min VAF</label>
+      <label data-i18n="f_vaf">Min VAF</label>
       <input id="f-vaf" type="number" placeholder="0.00" min="0" max="1" step="0.01">
     </div>
     <div class="filter-group" style="display:flex;align-items:flex-end;gap:.5rem">
-      <button class="btn" id="btn-clear">Clear</button>
+      <button class="btn" id="btn-clear" data-i18n="btn_clear">Clear</button>
       <button class="btn-excel" id="btn-excel" title="Export visible rows to Excel">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8.5 17l1.5-2.5L8.3 12h1.3l.9 1.6.9-1.6h1.2l-1.7 2.5 1.8 2.5h-1.3l-1-.8-.9 2H8.5zm3.8 0v-5h1.1v4h2.1v1h-3.2z"/></svg>
-        Excel
+        <span data-i18n="btn_excel">Excel</span>
       </button>
       <span id="filter-count"></span>
     </div>
@@ -733,31 +768,178 @@ footer{{
 </section>
 <footer>
   <div>
-    <div class="ft-title">Reference Database</div>
-    <div class="ft-body">Classification based on COSMIC Cancer Gene Census and Cosmic Complete Targeted Screen Mutant.</div>
+    <div class="ft-title" data-i18n="ft_db_title">Reference Database</div>
+    <div class="ft-body" data-i18n="ft_db_body">Classification based on COSMIC Cancer Gene Census and Cosmic Complete Targeted Screen Mutant.</div>
   </div>
   <div>
-    <div class="ft-title">Quality Control</div>
-    <div class="ft-body">Minimum depth >=10x, base quality >=20, mapping quality >=30.</div>
+    <div class="ft-title" data-i18n="ft_qc_title">Quality Control</div>
+    <div class="ft-body" data-i18n="ft_qc_body">Minimum depth >=10x, base quality >=20, mapping quality >=30.</div>
   </div>
   <div>
-    <div class="ft-title">Clickable Resources</div>
-    <div class="ft-body">
-      <strong>Gene</strong> -> GeneCards &nbsp;·&nbsp;
-      <strong>COSMIC ID</strong> -> COSMIC mutation identifier
-    </div>
+    <div class="ft-title" data-i18n="ft_res_title">Clickable Resources</div>
+    <div class="ft-body" data-i18n="ft_res_body"><strong>Gene</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → COSMIC mutation identifier</div>
   </div>
   <div class="ft-legal">
-    <strong>For Research Use Only.</strong>
-    This report is generated for academic and thesis purposes.
-    Clinical decisions should not be made based solely on this analysis without proper validation
-    and consultation with qualified healthcare professionals. &nbsp;|&nbsp;
-    Generated {now.strftime('%Y-%m-%d %H:%M:%S')}
+    <span data-i18n="ft_legal">
+      <strong>For Research Use Only.</strong>
+      This report is generated for academic and thesis purposes.
+      Clinical decisions should not be made based solely on this analysis without proper validation
+      and consultation with qualified healthcare professionals.
+    </span>
+    &nbsp;|&nbsp; Generated {now.strftime('%Y-%m-%d %H:%M:%S')}
   </div>
 </footer>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T = {{
+  en: {{
+    lang_label:"Language",
+    tagline:"Clinical Curation",
+    badge:"AI-Powered Pipeline v3.0 · GRCh38",
+    eyebrow:"Genomic Analysis Report",
+    title:"Clinical Genomic Report",
+    subtitle:"Allelic Variant Analysis · Genomic Variant Analysis",
+    meta_sample:"Sample ID", meta_date:"Analysis Date",
+    meta_pipeline:"Pipeline", meta_ref:"Reference",
+    card_total:"Total Variants",
+    card_critical:"Very Strong Significance",
+    card_moderate:"Potential Significance",
+    card_loh:"Loss of Heterozygosity (LOH)",
+    card_somatic:"Somatic Mutations",
+    card_onco:"Oncogenes",
+    card_tsg:"Tumor Suppressors",
+    card_dual:"Oncogene / TSG",
+    sec_title:"Detailed Variant Analysis",
+    f_priority:"Priority", f_gene:"Gene", f_origin:"Origin", f_vaf:"Min VAF",
+    f_all:"All", f_critical:"Very Strong Significance",
+    f_moderate:"Potential Significance", f_unknown:"Unknown Significance",
+    btn_clear:"Clear", btn_excel:"Excel",
+    badge_critical:"Very Strong Clinical Significance",
+    badge_moderate:"Potential Clinical Significance",
+    badge_low:"Unknown Clinical Significance",
+    showing:"Showing {{v}} of {{t}} variants",
+    ft_db_title:"Reference Database",
+    ft_db_body:"Classification based on COSMIC Cancer Gene Census and Cosmic Complete Targeted Screen Mutant.",
+    ft_qc_title:"Quality Control",
+    ft_qc_body:"Minimum depth >=10x, base quality >=20, mapping quality >=30.",
+    ft_res_title:"Clickable Resources",
+    ft_res_body:"<strong>Gene</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → COSMIC mutation identifier",
+    ft_legal:"<strong>For Research Use Only.</strong> This report is generated for academic and thesis purposes. Clinical decisions should not be made based solely on this analysis without proper validation and consultation with qualified healthcare professionals.",
+    tbl_headers:["Priority","Gene","Gene Role","Origin","Tumor Type","LOH Status","Chr","Position","Ref","Alt","VAF","Depth","COSMIC ID","Mutation Status"],
+    dir:"ltr"
+  }},
+  fr: {{
+    lang_label:"Langue",
+    tagline:"Curation clinique",
+    badge:"Pipeline IA v3.0 · GRCh38",
+    eyebrow:"Rapport d'analyse génomique",
+    title:"Rapport Génomique Clinique",
+    subtitle:"Analyse des variants alléliques · Analyse de variants génomiques",
+    meta_sample:"ID Échantillon", meta_date:"Date d'analyse",
+    meta_pipeline:"Pipeline", meta_ref:"Référence",
+    card_total:"Total des variants",
+    card_critical:"Signification très forte",
+    card_moderate:"Signification potentielle",
+    card_loh:"Perte d'hétérozygotie (LOH)",
+    card_somatic:"Mutations somatiques",
+    card_onco:"Oncogènes",
+    card_tsg:"Suppresseurs de tumeurs",
+    card_dual:"Oncogène / TSG",
+    sec_title:"Analyse détaillée des variants",
+    f_priority:"Priorité", f_gene:"Gène", f_origin:"Origine", f_vaf:"VAF min",
+    f_all:"Tous", f_critical:"Signification très forte",
+    f_moderate:"Signification potentielle", f_unknown:"Signification inconnue",
+    btn_clear:"Effacer", btn_excel:"Excel",
+    badge_critical:"Signification clinique très forte",
+    badge_moderate:"Signification clinique potentielle",
+    badge_low:"Signification clinique inconnue",
+    showing:"Affichage de {{v}} sur {{t}} variants",
+    ft_db_title:"Base de données de référence",
+    ft_db_body:"Classification basée sur le COSMIC Cancer Gene Census et le Cosmic Complete Targeted Screen Mutant.",
+    ft_qc_title:"Contrôle qualité",
+    ft_qc_body:"Profondeur minimale >=10x, qualité de base >=20, qualité de mappage >=30.",
+    ft_res_title:"Ressources cliquables",
+    ft_res_body:"<strong>Gène</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → Identifiant de mutation COSMIC",
+    ft_legal:"<strong>À des fins de recherche uniquement.</strong> Ce rapport est généré à des fins académiques et de thèse. Les décisions cliniques ne doivent pas être prises uniquement sur la base de cette analyse sans validation appropriée et consultation de professionnels de santé qualifiés.",
+    tbl_headers:["Priorité","Gène","Rôle du gène","Origine","Type de tumeur","Statut LOH","Chr","Position","Réf","Alt","VAF","Profondeur","COSMIC ID","Statut de mutation"],
+    dir:"ltr"
+  }},
+  ar: {{
+    lang_label:"اللغة",
+    tagline:"التنسيق السريري",
+    badge:"خط أنابيب بالذكاء الاصطناعي v3.0 · GRCh38",
+    eyebrow:"تقرير التحليل الجيني",
+    title:"التقرير الجيني السريري",
+    subtitle:"تحليل المتغيرات الأليلية · تحليل المتغيرات الجينومية",
+    meta_sample:"معرّف العينة", meta_date:"تاريخ التحليل",
+    meta_pipeline:"خط الأنابيب", meta_ref:"المرجع",
+    card_total:"إجمالي المتغيرات",
+    card_critical:"دلالة سريرية قوية جداً",
+    card_moderate:"دلالة سريرية محتملة",
+    card_loh:"فقدان الاتزان الاللييلي (LOH)",
+    card_somatic:"الطفرات الجسدية",
+    card_onco:"الجينات الورمية",
+    card_tsg:"جينات كابتة للأورام",
+    card_dual:"جين ورمي / كابت",
+    sec_title:"تحليل مفصّل للمتغيرات",
+    f_priority:"الأولوية", f_gene:"الجين", f_origin:"المصدر", f_vaf:"الحد الأدنى لـ VAF",
+    f_all:"الكل", f_critical:"دلالة قوية جداً",
+    f_moderate:"دلالة محتملة", f_unknown:"دلالة غير معروفة",
+    btn_clear:"مسح", btn_excel:"إكسل",
+    badge_critical:"دلالة سريرية قوية جداً",
+    badge_moderate:"دلالة سريرية محتملة",
+    badge_low:"دلالة سريرية غير معروفة",
+    showing:"عرض {{v}} من {{t}} متغيراً",
+    ft_db_title:"قاعدة البيانات المرجعية",
+    ft_db_body:"التصنيف مستند إلى COSMIC Cancer Gene Census وCosmic Complete Targeted Screen Mutant.",
+    ft_qc_title:"ضبط الجودة",
+    ft_qc_body:"الحد الأدنى للعمق >=10x، جودة القاعدة >=20، جودة الرسم الخرائطي >=30.",
+    ft_res_title:"روابط تفاعلية",
+    ft_res_body:"<strong>الجين</strong> → GeneCards &nbsp;·&nbsp; <strong>COSMIC ID</strong> → معرّف طفرة COSMIC",
+    ft_legal:"<strong>للاستخدام البحثي فقط.</strong> تم إنشاء هذا التقرير لأغراض أكاديمية ورسائل الدكتوراه. لا ينبغي اتخاذ القرارات السريرية بناءً على هذا التحليل وحده دون التحقق المناسب واستشارة متخصصين في الرعاية الصحية.",
+    tbl_headers:["الأولوية","الجين","دور الجين","المصدر","نوع الورم","حالة LOH","كروموسوم","الموضع","Ref","Alt","VAF","العمق","COSMIC ID","حالة الطفرة"],
+    dir:"rtl"
+  }}
+}};
+
+// ── LANG SWITCHER ─────────────────────────────────────────────────────────────
+function setLang(lang) {{
+  const t = T[lang];
+  document.documentElement.setAttribute('dir', t.dir);
+  document.documentElement.setAttribute('lang', lang);
+
+  // Swap all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {{
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  }});
+
+  // Swap badge text inside rows
+  document.querySelectorAll('.badge.critical').forEach(el => el.textContent = t.badge_critical);
+  document.querySelectorAll('.badge.moderate').forEach(el => el.textContent = t.badge_moderate);
+  document.querySelectorAll('.badge.low').forEach(el => el.textContent = t.badge_low);
+
+  // Swap table headers
+  const ths = document.querySelectorAll('#vtable thead th');
+  t.tbl_headers.forEach((h, i) => {{ if (ths[i]) ths[i].textContent = h; }});
+
+  // Update showing count text
+  const countEl = document.getElementById('filter-count');
+  const vis = Array.from(document.querySelectorAll('#vtable tbody tr')).filter(r => r.style.display !== 'none').length;
+  const total = document.querySelectorAll('#vtable tbody tr').length;
+  countEl.textContent = t.showing.replace('{{v}}', vis).replace('{{t}}', total);
+
+  // Active button style
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+}}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {{
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+}});
+
+// ── FILTER + EXCEL ─────────────────────────────────────────────────────────────
 (function(){{
   const tbl = document.getElementById('vtable');
   const rows = Array.from(tbl.tBodies[0].rows);
@@ -766,6 +948,11 @@ footer{{
   const fOrig = document.getElementById('f-origin');
   const fVaf = document.getElementById('f-vaf');
   const count = document.getElementById('filter-count');
+
+  function updateCount(vis) {{
+    const lang = document.documentElement.getAttribute('lang') || 'en';
+    count.textContent = T[lang].showing.replace('{{v}}', vis).replace('{{t}}', rows.length);
+  }}
 
   function filter(){{
     let vis = 0;
@@ -782,7 +969,7 @@ footer{{
       r.style.display = ok ? '' : 'none';
       if(ok) vis++;
     }});
-    count.textContent = `Showing ${{vis}} of ${{rows.length}} variants`;
+    updateCount(vis);
   }}
 
   [fPri, fOrig].forEach(el => el.addEventListener('change', filter));
@@ -790,40 +977,33 @@ footer{{
   document.getElementById('btn-clear').addEventListener('click',()=>{{
     fPri.value=''; fGene.value=''; fOrig.value=''; fVaf.value=''; filter();
   }});
-  count.textContent = `Showing ${{rows.length}} of ${{rows.length}} variants`;
+  updateCount(rows.length);
 
   document.getElementById('btn-excel').addEventListener('click', () => {{
-    // Collect headers from thead
     const headers = Array.from(tbl.tHead.rows[0].cells).map(th => th.textContent.trim());
-
-    // Collect only visible rows, using plain text (strips HTML/badges)
     const data = [headers];
     rows.forEach(r => {{
       if (r.style.display === 'none') return;
       data.push(Array.from(r.cells).map(td => td.textContent.trim()));
     }});
-
     const ws = XLSX.utils.aoa_to_sheet(data);
-
-    // Auto-size columns
     const colWidths = headers.map((_, ci) =>
       Math.min(60, Math.max(10, ...data.map(row => (row[ci] || '').length)))
     );
     ws['!cols'] = colWidths.map(w => ({{ wch: w }}));
-
-    // Style header row bold (basic)
     headers.forEach((_, ci) => {{
       const cellRef = XLSX.utils.encode_cell({{r: 0, c: ci}});
       if (ws[cellRef]) ws[cellRef].s = {{ font: {{ bold: true }} }};
     }});
-
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Variants');
-
     const filename = `variants_{sample_id}_${{new Date().toISOString().slice(0,10)}}.xlsx`;
     XLSX.writeFile(wb, filename);
   }});
 }})();
+
+// Init default language
+setLang('en');
 </script>
 </body>
 </html>"""
